@@ -1,115 +1,85 @@
 import { ExternalLink, Github, MapPin, Briefcase, Zap, Globe } from 'lucide-react';
 import { SITE_CONFIG } from '../data/config';
-
-const BADGES = ['Data Engineering', 'ML', 'Web', 'Mobile'];
-
-const QUICK_FACTS = [
-  { icon: Briefcase, label: 'Role', value: SITE_CONFIG.role },
-  { icon: Zap, label: 'Focus', value: 'Data · ML · Web' },
-  { icon: Globe, label: 'Availability', value: SITE_CONFIG.availability },
-  { icon: MapPin, label: 'Location', value: SITE_CONFIG.location },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { t } = useLanguage();
+
+  const QUICK_FACTS = [
+    { icon: Briefcase, label: t.hero.quick_facts.role, value: SITE_CONFIG.role },
+    { icon: Zap, label: t.hero.quick_facts.focus, value: t.hero.focus_value },
+    { icon: Globe, label: t.hero.quick_facts.availability, value: SITE_CONFIG.availability },
+    { icon: MapPin, label: t.hero.quick_facts.location, value: SITE_CONFIG.location },
+  ];
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-sky-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900"
+      className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden bg-white dark:bg-slate-950 pt-20"
     >
+      {/* Dynamic Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/4 -right-32 w-96 h-96 bg-sky-400/10 dark:bg-sky-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -left-32 w-80 h-80 bg-teal-400/10 dark:bg-teal-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-400/5 rounded-full blur-3xl" />
-        <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]"
-          style={{ backgroundImage: 'radial-gradient(circle, #0ea5e9 1px, transparent 1px)', backgroundSize: '40px 40px' }}
-        />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 dark:bg-emerald-500/10 blur-[120px] rounded-full opacity-50" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 dark:bg-cyan-500/10 blur-[120px] rounded-full opacity-40" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-30 mix-blend-overlay" />
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-16">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-sky-200 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 text-xs font-medium mb-6 animate-fade-in">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
-            Summary Portfolio Project
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-md text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-widest mb-8 animate-fade-in shadow-lg shadow-emerald-500/5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            {t.hero.badge}
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4 animate-slide-up">
-            Muhammad{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-teal-500">
-              Hafiz Fassya
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-slate-900 dark:text-white leading-[0.95] mb-8 animate-slide-up tracking-tighter">
+            {t.hero.role_prefix}{' '}
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-[length:200%_auto] animate-gradient">
+              {t.hero.role_span}
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 font-light mb-6 leading-relaxed animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            A 60-second overview of Hafiz's work in{' '}
-            <span className="text-slate-700 dark:text-slate-200 font-medium">Data Engineering</span>,{' '}
-            <span className="text-slate-700 dark:text-slate-200 font-medium">Machine Learning</span>, and{' '}
-            <span className="text-slate-700 dark:text-slate-200 font-medium">Web Systems</span>.
+          <p className="text-xl sm:text-2xl text-slate-500 dark:text-slate-400 font-light mb-10 leading-relaxed max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            {t.hero.description_prefix}{' '}
+            <span className="text-slate-900 dark:text-slate-100 font-semibold border-b-2 border-emerald-500/30">{t.hero.description_de}</span>,{' '}
+            <span className="text-slate-900 dark:text-slate-100 font-semibold border-b-2 border-cyan-500/30">{t.hero.description_ml}</span>, and{' '}
+            <span className="text-slate-900 dark:text-slate-100 font-semibold border-b-2 border-emerald-500/30">{t.hero.description_web}</span>.
           </p>
 
-          <div className="flex flex-wrap gap-2 mb-8 animate-slide-up" style={{ animationDelay: '0.15s' }}>
-            {BADGES.map((badge) => (
-              <span
-                key={badge}
-                className="px-3 py-1 text-xs font-semibold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
-              >
-                {badge}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-3 mb-12 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <div className="flex flex-wrap justify-center gap-4 mb-16 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <a
               href={SITE_CONFIG.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold transition-all duration-200 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:-translate-y-0.5"
+              className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-slate-900 dark:bg-emerald-500 text-white dark:text-slate-950 text-base font-bold transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl shadow-emerald-500/20 overflow-hidden"
             >
-              <ExternalLink size={15} />
-              View Full Portfolio
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+              <ExternalLink size={20} />
+              {t.hero.view_portfolio}
             </a>
             <a
               href={SITE_CONFIG.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-semibold hover:border-sky-400 dark:hover:border-sky-500 hover:text-sky-600 dark:hover:text-sky-400 transition-all duration-200 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-white text-base font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 hover:border-emerald-500/50"
             >
-              <Github size={15} />
-              Explore GitHub
+              <Github size={20} />
+              {t.hero.explore_github}
             </a>
-            <button
-              onClick={() => scrollTo('projects')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 text-sm font-medium hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 transition-all duration-200"
-            >
-              See Projects ↓
-            </button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 animate-slide-up" style={{ animationDelay: '0.25s' }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-slide-up" style={{ animationDelay: '0.3s' }}>
             {QUICK_FACTS.map(({ icon: Icon, label, value }) => (
               <div
                 key={label}
-                className="flex flex-col gap-1 p-3 rounded-xl bg-white/70 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 backdrop-blur-sm"
+                className="glass-card flex flex-col gap-2 p-5 rounded-3xl"
               >
-                <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
-                  <Icon size={12} />
-                  <span className="text-[10px] font-medium uppercase tracking-wide">{label}</span>
+                <div className="flex items-center gap-2 text-emerald-500">
+                  <Icon size={18} />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">{label}</span>
                 </div>
-                <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">{value}</span>
+                <span className="text-sm font-bold text-slate-900 dark:text-white truncate">{value}</span>
               </div>
             ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-600 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          <span>Scroll to explore</span>
-          <div className="w-6 h-9 border-2 border-slate-300 dark:border-slate-700 rounded-full flex items-start justify-center p-1">
-            <div className="w-1 h-2 bg-slate-400 dark:border-slate-600 rounded-full animate-float" />
           </div>
         </div>
       </div>
